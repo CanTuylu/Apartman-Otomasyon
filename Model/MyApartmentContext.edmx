@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ApartmentAutomationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Apartment">
+          <Key>
+            <PropertyRef Name="ApartmentID" />
+          </Key>
+          <Property Name="ApartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ApartmentName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ApartmentNo" Type="nvarchar" MaxLength="5" />
+          <Property Name="ApartmentAddress" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Expanse">
+          <Key>
+            <PropertyRef Name="ExpenseID" />
+          </Key>
+          <Property Name="ExpenseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExpenseName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ExpanseDescription" Type="nvarchar" MaxLength="250" />
+          <Property Name="ExpansePrice" Type="money" />
+          <Property Name="ExpanseDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="House">
+          <Key>
+            <PropertyRef Name="HouseID" />
+          </Key>
+          <Property Name="HouseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HouseNo" Type="nvarchar" MaxLength="10" />
+          <Property Name="HouseFloor" Type="nvarchar" MaxLength="2" />
+          <Property Name="HouseHostID" Type="int" />
+        </EntityType>
+        <EntityType Name="HouseHost">
+          <Key>
+            <PropertyRef Name="HostID" />
+          </Key>
+          <Property Name="HostID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HostName" Type="nvarchar" MaxLength="50" />
+          <Property Name="HostLastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="HostPhone" Type="nvarchar" MaxLength="15" />
+          <Property Name="HostTC" Type="nvarchar" MaxLength="11" />
+          <Property Name="HostIsRemoved" Type="bit" />
+        </EntityType>
+        <EntityType Name="Income">
+          <Key>
+            <PropertyRef Name="IncomeID" />
+          </Key>
+          <Property Name="IncomeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IncomeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IncomeDescription" Type="nvarchar" MaxLength="250" />
+          <Property Name="IncomePrice" Type="money" />
+          <Property Name="IncomeDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PersonLastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PersonTC" Type="nvarchar" MaxLength="11" />
+          <Property Name="PersonPassword" Type="nvarchar" MaxLength="6" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_House_HouseHost">
+          <End Role="HouseHost" Type="Self.HouseHost" Multiplicity="0..1" />
+          <End Role="House" Type="Self.House" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HouseHost">
+              <PropertyRef Name="HostID" />
+            </Principal>
+            <Dependent Role="House">
+              <PropertyRef Name="HouseHostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ApartmentAutomationModelStoreContainer">
+          <EntitySet Name="Apartment" EntityType="Self.Apartment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Expanse" EntityType="Self.Expanse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="House" EntityType="Self.House" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HouseHost" EntityType="Self.HouseHost" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Income" EntityType="Self.Income" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_House_HouseHost" Association="Self.FK_House_HouseHost">
+            <End Role="HouseHost" EntitySet="HouseHost" />
+            <End Role="House" EntitySet="House" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ApartmentAutomationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Apartment">
+          <Key>
+            <PropertyRef Name="ApartmentID" />
+          </Key>
+          <Property Name="ApartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ApartmentName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ApartmentNo" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="ApartmentAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Expanse">
+          <Key>
+            <PropertyRef Name="ExpenseID" />
+          </Key>
+          <Property Name="ExpenseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExpenseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ExpanseDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ExpansePrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ExpanseDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="House">
+          <Key>
+            <PropertyRef Name="HouseID" />
+          </Key>
+          <Property Name="HouseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HouseNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="HouseFloor" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="HouseHostID" Type="Int32" />
+          <NavigationProperty Name="HouseHost" Relationship="Self.FK_House_HouseHost" FromRole="House" ToRole="HouseHost" />
+        </EntityType>
+        <EntityType Name="HouseHost">
+          <Key>
+            <PropertyRef Name="HostID" />
+          </Key>
+          <Property Name="HostID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HostName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HostLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HostPhone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="HostTC" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="HostIsRemoved" Type="Boolean" />
+          <NavigationProperty Name="House" Relationship="Self.FK_House_HouseHost" FromRole="HouseHost" ToRole="House" />
+        </EntityType>
+        <EntityType Name="Income">
+          <Key>
+            <PropertyRef Name="IncomeID" />
+          </Key>
+          <Property Name="IncomeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IncomeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IncomeDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IncomePrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IncomeDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PersonLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PersonTC" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="PersonPassword" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_House_HouseHost">
+          <End Role="HouseHost" Type="Self.HouseHost" Multiplicity="0..1" />
+          <End Role="House" Type="Self.House" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HouseHost">
+              <PropertyRef Name="HostID" />
+            </Principal>
+            <Dependent Role="House">
+              <PropertyRef Name="HouseHostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ApartmentAutomationEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Apartment" EntityType="Self.Apartment" />
+          <EntitySet Name="Expanse" EntityType="Self.Expanse" />
+          <EntitySet Name="House" EntityType="Self.House" />
+          <EntitySet Name="HouseHost" EntityType="Self.HouseHost" />
+          <EntitySet Name="Income" EntityType="Self.Income" />
+          <EntitySet Name="Person" EntityType="Self.Person" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_House_HouseHost" Association="Self.FK_House_HouseHost">
+            <End Role="HouseHost" EntitySet="HouseHost" />
+            <End Role="House" EntitySet="House" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ApartmentAutomationModelStoreContainer" CdmEntityContainer="ApartmentAutomationEntities">
+          <EntitySetMapping Name="Apartment">
+            <EntityTypeMapping TypeName="ApartmentAutomationModel.Apartment">
+              <MappingFragment StoreEntitySet="Apartment">
+                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
+                <ScalarProperty Name="ApartmentName" ColumnName="ApartmentName" />
+                <ScalarProperty Name="ApartmentNo" ColumnName="ApartmentNo" />
+                <ScalarProperty Name="ApartmentAddress" ColumnName="ApartmentAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Expanse">
+            <EntityTypeMapping TypeName="ApartmentAutomationModel.Expanse">
+              <MappingFragment StoreEntitySet="Expanse">
+                <ScalarProperty Name="ExpenseID" ColumnName="ExpenseID" />
+                <ScalarProperty Name="ExpenseName" ColumnName="ExpenseName" />
+                <ScalarProperty Name="ExpanseDescription" ColumnName="ExpanseDescription" />
+                <ScalarProperty Name="ExpansePrice" ColumnName="ExpansePrice" />
+                <ScalarProperty Name="ExpanseDate" ColumnName="ExpanseDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="House">
+            <EntityTypeMapping TypeName="ApartmentAutomationModel.House">
+              <MappingFragment StoreEntitySet="House">
+                <ScalarProperty Name="HouseID" ColumnName="HouseID" />
+                <ScalarProperty Name="HouseNo" ColumnName="HouseNo" />
+                <ScalarProperty Name="HouseFloor" ColumnName="HouseFloor" />
+                <ScalarProperty Name="HouseHostID" ColumnName="HouseHostID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HouseHost">
+            <EntityTypeMapping TypeName="ApartmentAutomationModel.HouseHost">
+              <MappingFragment StoreEntitySet="HouseHost">
+                <ScalarProperty Name="HostID" ColumnName="HostID" />
+                <ScalarProperty Name="HostName" ColumnName="HostName" />
+                <ScalarProperty Name="HostLastName" ColumnName="HostLastName" />
+                <ScalarProperty Name="HostPhone" ColumnName="HostPhone" />
+                <ScalarProperty Name="HostTC" ColumnName="HostTC" />
+                <ScalarProperty Name="HostIsRemoved" ColumnName="HostIsRemoved" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Income">
+            <EntityTypeMapping TypeName="ApartmentAutomationModel.Income">
+              <MappingFragment StoreEntitySet="Income">
+                <ScalarProperty Name="IncomeID" ColumnName="IncomeID" />
+                <ScalarProperty Name="IncomeName" ColumnName="IncomeName" />
+                <ScalarProperty Name="IncomeDescription" ColumnName="IncomeDescription" />
+                <ScalarProperty Name="IncomePrice" ColumnName="IncomePrice" />
+                <ScalarProperty Name="IncomeDate" ColumnName="IncomeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Person">
+            <EntityTypeMapping TypeName="ApartmentAutomationModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="PersonName" ColumnName="PersonName" />
+                <ScalarProperty Name="PersonLastName" ColumnName="PersonLastName" />
+                <ScalarProperty Name="PersonTC" ColumnName="PersonTC" />
+                <ScalarProperty Name="PersonPassword" ColumnName="PersonPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ApartmentAutomationModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
